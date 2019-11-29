@@ -1,0 +1,15 @@
+﻿  Quickhull.cpp
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(15,71): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(15,71): warning C4244:         with
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(15,71): warning C4244:         [
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(15,71): warning C4244:             T=float
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(15,71): warning C4244:         ]
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(44,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(45,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(120,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating code
+  2 of 125 functions ( 1.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Quickhull.vcxproj -> C:\Users\robar\source\repos\Quickhull\x64\Release\Quickhull.exe

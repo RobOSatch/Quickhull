@@ -1,0 +1,10 @@
+^C:\USERS\ROBAR\SOURCE\REPOS\QUICKHULL\QUICKHULL\SFML-2.5.1\CMAKEFILES\D5EB2685AA4022BA12903564F2B2A37A\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/robar/source/repos/Quickhull/Quickhull/SFML-2.5.1 -BC:/Users/robar/source/repos/Quickhull/Quickhull/SFML-2.5.1 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/robar/source/repos/Quickhull/Quickhull/SFML-2.5.1/SFML.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

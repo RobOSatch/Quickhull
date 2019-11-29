@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\robar\source\repos\Quickhull\Quickhull\SFML-2.5.1\CMakeFiles\457a75ba4eca2cc82c6492f9c5545709\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{05DD1A8A-36C5-303D-B428-777439968BFB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
