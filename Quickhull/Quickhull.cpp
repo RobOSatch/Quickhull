@@ -30,7 +30,7 @@ float distance(sf::Vertex a, sf::Vertex b, sf::Vertex query, sf::RenderWindow &w
 		sf::Vertex(sf::Vector2f(closestPoint.x, closestPoint.y)),
 		query
 	};
-	window.draw(line, 2, sf::Lines);
+	//window.draw(line, 2, sf::Lines);
 
 	return glm::distance(closestPoint, glmQuery);
 
@@ -46,15 +46,17 @@ void findHull(std::vector<sf::Vertex> set, sf::Vertex p, sf::Vertex q, std::vect
 		if (distance(p, q, set[i], window) > distance(p, q, set[farthest], window)) farthest = i;
 	}
 
-	//convexHull.insert(convexHull.begin() + q, set[farthest]);
-	convexHull.push_back(set[farthest]);
 	sf::Vertex farthestVertex = set[farthest];
-	set.erase(set.begin() + farthest);
+	for (int i = 0; i < convexHull.size(); i++) {
+		if (convexHull[i].position == p.position) {
+			convexHull.insert(convexHull.begin() + i + 1, farthestVertex);
+		}
+	}
 
 	std::vector<sf::Vertex> subset1, subset2;
 	for (int i = 0; i < set.size(); i++) {
-		float detLeft = orient2D(p, set[farthest], set[i]);
-		float detRight = orient2D(set[farthest], q, set[i]);
+		float detLeft = orient2D(p, farthestVertex, set[i]);
+		float detRight = orient2D(farthestVertex, q, set[i]);
 
 		if (!(detLeft > 0 && detRight > 0)) {
 			if (detLeft < 0) {
@@ -65,6 +67,7 @@ void findHull(std::vector<sf::Vertex> set, sf::Vertex p, sf::Vertex q, std::vect
 			}
 		}
 	}
+	set.erase(set.begin() + farthest);
 	//window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
 	
 	findHull(subset1, p, farthestVertex, convexHull, window);
@@ -115,7 +118,9 @@ std::vector<sf::Vertex> quickHull(std::vector<sf::Vertex> points, sf::RenderWind
 	
 	/*window.draw(&leftSet[0], leftSet.size(), sf::Points);
 	window.draw(&rightSet[0], rightSet.size(), sf::Points);*/
-	window.draw(line, 2, sf::Lines);
+	
+	// Draw line
+	//window.draw(line, 2, sf::Lines);
 
 	std::cout << "Convex hull size " << convexHull.size() << std::endl;
 
@@ -141,9 +146,9 @@ int main()
 	srand(time(NULL));
 	std::vector<sf::Vertex> points;
 
-	for (int i = 0; i < 20; i++) {
-		float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / SCREEN_WIDTH));
-		float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / SCREEN_HEIGHT));
+	for (int i = 0; i < 100; i++) {
+		float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_WIDTH * 0.8))) + SCREEN_WIDTH * 0.1;
+		float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_HEIGHT * 0.8))) + SCREEN_HEIGHT * 0.1;
 		points.push_back(sf::Vertex(sf::Vector2f(x, y)));
 	}
 
@@ -153,7 +158,7 @@ int main()
 
 	std::vector<sf::Vertex> convexHull = quickHull(points, window);
 	convexHull.push_back(convexHull[0]);
-	//window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
+	window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
 
 	while (window.isOpen())
 	{

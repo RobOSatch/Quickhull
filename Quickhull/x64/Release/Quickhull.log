@@ -4,12 +4,14 @@ C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4
 C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:         [
 C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:             T=float
 C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:         ]
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(56,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(57,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(141,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(58,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(59,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(146,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(150,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(151,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  2 of 140 functions ( 1.4%) were compiled, the rest were copied from previous compilation.
+  1 of 149 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Quickhull.vcxproj -> C:\Users\robar\source\repos\Quickhull\x64\Release\Quickhull.exe
