@@ -1,16 +1,16 @@
 ﻿  Quickhull.cpp
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:         with
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:         [
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:             T=float
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(18,71): warning C4244:         ]
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(58,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(59,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(146,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(150,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(151,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(20,71): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(20,71): warning C4244:         with
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(20,71): warning C4244:         [
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(20,71): warning C4244:             T=float
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(20,71): warning C4244:         ]
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(60,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(61,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(152,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(156,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(157,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  1 of 149 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+  1 of 248 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

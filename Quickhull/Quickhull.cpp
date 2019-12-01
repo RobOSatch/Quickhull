@@ -13,6 +13,8 @@
 #include <thread>
 #include <chrono>
 
+#include "Timer.h"
+
 int orient2D(sf::Vertex a, sf::Vertex b, sf::Vertex c)
 {
 	return (a.position.x - c.position.x) * (b.position.y - c.position.y) - (a.position.y - c.position.y) * (b.position.x - c.position.x);
@@ -90,6 +92,9 @@ std::vector<sf::Vertex> quickHull(std::vector<sf::Vertex> points, sf::RenderWind
 	points.erase(points.begin() + minIndex);
 	points.erase(points.begin() + maxIndex);
 
+	convexHull[0].color = sf::Color::Magenta;
+	convexHull[1].color = sf::Color::Magenta;
+
 	sf::Vertex line[] = {
 		convexHull[0],
 		convexHull[1]
@@ -100,8 +105,8 @@ std::vector<sf::Vertex> quickHull(std::vector<sf::Vertex> points, sf::RenderWind
 	for (int i = 0; i < points.size(); i++) {
 		int det = orient2D(convexHull[0], convexHull[1], points[i]);
 
-		if (det > 0) rightSet.push_back(sf::Vertex(points[i].position, sf::Color::Green));
-		else if (det < 0) leftSet.push_back(sf::Vertex(points[i].position, sf::Color::Red));
+		if (det > 0) rightSet.push_back(sf::Vertex(points[i].position, sf::Color::Magenta));
+		else if (det < 0) leftSet.push_back(sf::Vertex(points[i].position, sf::Color::Magenta));
 	}
 
 	for (int i = 0; i < rightSet.size(); i++) {
@@ -129,6 +134,7 @@ std::vector<sf::Vertex> quickHull(std::vector<sf::Vertex> points, sf::RenderWind
 
 	findHull(leftSet, min, max, convexHull, window);
 	findHull(rightSet, max, min, convexHull, window);
+	convexHull.push_back(min);
 
 	return convexHull;
 }
@@ -146,9 +152,9 @@ int main()
 	srand(time(NULL));
 	std::vector<sf::Vertex> points;
 
-	for (int i = 0; i < 100; i++) {
-		float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_WIDTH * 0.8))) + SCREEN_WIDTH * 0.1;
-		float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_HEIGHT * 0.8))) + SCREEN_HEIGHT * 0.1;
+	for (int i = 0; i < 500; i++) {
+		float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_WIDTH * 0.95))) + SCREEN_WIDTH * 0.025;
+		float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_HEIGHT * 0.95))) + SCREEN_HEIGHT * 0.025;
 		points.push_back(sf::Vertex(sf::Vector2f(x, y)));
 	}
 
@@ -156,8 +162,10 @@ int main()
 	settings.antialiasingLevel = 8;
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Quickhull", sf::Style::Default, settings);
 
+	Timer::start();
 	std::vector<sf::Vertex> convexHull = quickHull(points, window);
-	convexHull.push_back(convexHull[0]);
+	Timer::stop();
+
 	window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
 
 	while (window.isOpen())
