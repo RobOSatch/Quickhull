@@ -57,7 +57,6 @@ std::vector<sf::Vertex> importPointsFromFile(std::string filename)
 	if (myfile.is_open())
 	{
 		std::getline(myfile, line);
-		int numberCount = std::stoi(line);
 
 		while (std::getline(myfile, line))
 		{
