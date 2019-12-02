@@ -22,7 +22,7 @@
 // CONSTANTS
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
-const int n = 100;
+const int n = 1000;
 
 int step = 0;
 
@@ -40,8 +40,15 @@ void update(sf::RenderWindow& window, std::vector<sf::Vertex> &points)
 
 	if (step < 0) step = 0;
 	if (step >= convex_hull::hullHistory.size()) step = convex_hull::hullHistory.size() - 1;
-
+	
 	std::vector<sf::Vertex> hullAtStep = convex_hull::hullHistory[step];
+
+	if (step == convex_hull::hullHistory.size() - 1) {
+		for (sf::Vertex& v : hullAtStep) {
+			v.color = sf::Color::Yellow;
+		}
+	}
+
 	window.draw(&hullAtStep[0], hullAtStep.size(), sf::LinesStrip);
 }
 
@@ -96,7 +103,6 @@ int main()
 		}
 
 		std::cout << std::endl;
-		break;
 
 	case eModeGraphic:
 		sf::ContextSettings settings;

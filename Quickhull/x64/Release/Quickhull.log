@@ -7,11 +7,11 @@ C:\Users\robar\source\repos\Quickhull\Quickhull\convexHull.h(39,72): warning C42
 C:\Users\robar\source\repos\Quickhull\Quickhull\convexHull.h(67,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\Users\robar\source\repos\Quickhull\Quickhull\convexHull.h(68,19): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(42,89): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(77,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(81,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(82,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(83,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(87,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\robar\source\repos\Quickhull\Quickhull\Quickhull.cpp(88,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  27 of 352 functions ( 7.7%) were compiled, the rest were copied from previous compilation.
+  2 of 352 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
