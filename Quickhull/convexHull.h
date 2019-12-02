@@ -7,7 +7,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/closest_point.hpp>
 
-#include <thread>
 #include <chrono>
 
 #include <string>
@@ -20,7 +19,7 @@ enum MODE {
 };
 
 namespace convex_hull {
-	
+
 	MODE mode = eModeGraphic;
 	std::vector<std::vector<sf::Vertex>> hullHistory;
 
@@ -46,6 +45,7 @@ namespace {
 		return abs((query.position.y - a.position.y) * (b.position.x - a.position.x) - (b.position.y - a.position.y) * (query.position.x - a.position.x));
 	}
 
+	// Finds the point in set, which is farthest from pq and adds it to the convex hull. After that the set is partitioned.
 	void findHull(std::vector<sf::Vertex>& set, sf::Vertex p, sf::Vertex q, std::vector<sf::Vertex>& convexHull)
 	{
 		if (set.size() == 0) return;
@@ -91,6 +91,8 @@ namespace {
 
 namespace convex_hull {
 
+	// Finds the min and max points in x-direction and adds them to the convex hull. Then partitions the remaining points into points that are
+	// left of the minmax-line and points that are right of the minmax-line. 
 	std::vector<sf::Vertex> quickHull(std::vector<sf::Vertex> points)
 	{
 		std::vector<sf::Vertex> convexHull;
@@ -99,6 +101,7 @@ namespace convex_hull {
 
 		if (mode == eModeGraphic) hullHistory.push_back(convexHull);
 
+		// Find min and max
 		for (int i = 1; i < points.size(); i++) {
 			if (points[i].position.x < points[minIndex].position.x) minIndex = i;
 			if (points[i].position.x > points[maxIndex].position.x) maxIndex = i;
@@ -111,6 +114,7 @@ namespace convex_hull {
 
 		std::vector<sf::Vertex> rightSet, leftSet;
 
+		// Partition into two sets
 		for (int i = 0; i < points.size(); i++) {
 			int det = orient2D(convexHull[0], convexHull[1], points[i]);
 
@@ -120,7 +124,7 @@ namespace convex_hull {
 
 		sf::Vertex min = convexHull[0];
 		sf::Vertex max = convexHull[1];
-
+		
 		if (mode == eModeGraphic) {
 			mMin = min;
 			std::vector<sf::Vertex> copy = convexHull;
@@ -130,7 +134,6 @@ namespace convex_hull {
 
 		findHull(leftSet, min, max, convexHull);
 		findHull(rightSet, max, min, convexHull);
-		convexHull.push_back(min);
 
 		return convexHull;
 	}
