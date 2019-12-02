@@ -13,181 +13,118 @@
 #include <thread>
 #include <chrono>
 
+#include <string>
+#include <fstream>
+#include <algorithm>
+
 #include "Timer.h"
+#include "convexHull.h"
 
-int orient2D(sf::Vertex a, sf::Vertex b, sf::Vertex c)
+int step = 0;
+
+// Renders the appropriate hull step
+void update(sf::RenderWindow& window)
 {
-	return (a.position.x - c.position.x) * (b.position.y - c.position.y) - (a.position.y - c.position.y) * (b.position.x - c.position.x);
+	window.clear();
+
+	if (step < 0) step = 0;
+	if (step >= convex_hull::hullHistory.size()) step = convex_hull::hullHistory.size() - 1;
+
+	std::vector<sf::Vertex> hullAtStep = convex_hull::hullHistory[step];
+	window.draw(&hullAtStep[0], hullAtStep.size(), sf::LinesStrip);
 }
 
-float distance(sf::Vertex a, sf::Vertex b, sf::Vertex query, sf::RenderWindow &window)
+// Imports floats from a file and returns them in a vector
+std::vector<sf::Vertex> importPointsFromFile(std::string filename)
 {
-	glm::vec2 glmA = glm::vec2(a.position.x, a.position.y);
-	glm::vec2 glmB = glm::vec2(b.position.x, b.position.y);
-	glm::vec2 glmQuery = glm::vec2(query.position.x, query.position.y);
+	std::string line;
+	std::ifstream myfile;
+	myfile.open("floats.txt");
 
-	glm::vec2 closestPoint = glm::closestPointOnLine(glmQuery, glmA, glmB);
-	
-	sf::Vertex line[] = {
-		sf::Vertex(sf::Vector2f(closestPoint.x, closestPoint.y)),
-		query
-	};
-	//window.draw(line, 2, sf::Lines);
+	std::vector<sf::Vertex> points;
 
-	return glm::distance(closestPoint, glmQuery);
+	if (myfile.is_open())
+	{
+		std::getline(myfile, line);
+		int numberCount = std::stoi(line);
 
-	//return abs((query.position.y - a.position.y) * (b.position.x - a.position.x) - (b.position.y - a.position.y) * (query.position.x - a.position.x));
-}
 
-void findHull(std::vector<sf::Vertex> set, sf::Vertex p, sf::Vertex q, std::vector<sf::Vertex>& convexHull, sf::RenderWindow &window)
-{
-	if (set.size() == 0) return;
+		while (std::getline(myfile, line))
+		{
+			float x = std::stof(line.substr(0, line.find(',')));
+			float y = std::stof(line.substr(line.find(',') + 1, line.length()));
 
-	int farthest = 0;
-	for (int i = 1; i < set.size(); i++) {
-		if (distance(p, q, set[i], window) > distance(p, q, set[farthest], window)) farthest = i;
-	}
 
-	sf::Vertex farthestVertex = set[farthest];
-	for (int i = 0; i < convexHull.size(); i++) {
-		if (convexHull[i].position == p.position) {
-			convexHull.insert(convexHull.begin() + i + 1, farthestVertex);
+			points.push_back(sf::Vertex(sf::Vector2f(x, y)));
 		}
+
 	}
 
-	std::vector<sf::Vertex> subset1, subset2;
-	for (int i = 0; i < set.size(); i++) {
-		float detLeft = orient2D(p, farthestVertex, set[i]);
-		float detRight = orient2D(farthestVertex, q, set[i]);
-
-		if (!(detLeft > 0 && detRight > 0)) {
-			if (detLeft < 0) {
-				subset1.push_back(set[i]);
-			}
-			else if (detRight < 0) {
-				subset2.push_back(set[i]);
-			}
-		}
-	}
-	set.erase(set.begin() + farthest);
-	//window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
-	
-	findHull(subset1, p, farthestVertex, convexHull, window);
-	findHull(subset2, farthestVertex, q, convexHull, window);
-}
-
-std::vector<sf::Vertex> quickHull(std::vector<sf::Vertex> points, sf::RenderWindow &window)
-{
-	std::vector<sf::Vertex> convexHull;
-	int minIndex = 0;
-	int maxIndex = 0;
-
-	for (int i = 1; i < points.size(); i++) {
-		if (points[i].position.x < points[minIndex].position.x) minIndex = i;
-		if (points[i].position.x > points[maxIndex].position.x) maxIndex = i;
-	}
-
-	convexHull.push_back(points[minIndex]);
-	convexHull.push_back(points[maxIndex]);
-	points.erase(points.begin() + minIndex);
-	points.erase(points.begin() + maxIndex);
-
-	convexHull[0].color = sf::Color::Magenta;
-	convexHull[1].color = sf::Color::Magenta;
-
-	sf::Vertex line[] = {
-		convexHull[0],
-		convexHull[1]
-	};
-
-	std::vector<sf::Vertex> rightSet, leftSet;
-
-	for (int i = 0; i < points.size(); i++) {
-		int det = orient2D(convexHull[0], convexHull[1], points[i]);
-
-		if (det > 0) rightSet.push_back(sf::Vertex(points[i].position, sf::Color::Magenta));
-		else if (det < 0) leftSet.push_back(sf::Vertex(points[i].position, sf::Color::Magenta));
-	}
-
-	for (int i = 0; i < rightSet.size(); i++) {
-		sf::CircleShape shape(2.f);
-		shape.move(rightSet[i].position);
-		window.draw(shape);
-	}
-
-	for (int i = 0; i < leftSet.size(); i++) {
-		sf::CircleShape shape(2.f);
-		shape.move(leftSet[i].position);
-		window.draw(shape);
-	}
-	
-	/*window.draw(&leftSet[0], leftSet.size(), sf::Points);
-	window.draw(&rightSet[0], rightSet.size(), sf::Points);*/
-	
-	// Draw line
-	//window.draw(line, 2, sf::Lines);
-
-	std::cout << "Convex hull size " << convexHull.size() << std::endl;
-
-	sf::Vertex min = convexHull[0];
-	sf::Vertex max = convexHull[1];
-
-	findHull(leftSet, min, max, convexHull, window);
-	findHull(rightSet, max, min, convexHull, window);
-	convexHull.push_back(min);
-
-	return convexHull;
-}
-
-void Update()
-{
-
+	return points;
 }
 
 int main()
 {	
 	int SCREEN_WIDTH = 1920;
 	int SCREEN_HEIGHT = 1080;
+	int n = 100;
 
 	srand(time(NULL));
 	std::vector<sf::Vertex> points;
-
-	for (int i = 0; i < 500; i++) {
+	
+	for (int i = 0; i < n; i++) {
 		float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_WIDTH * 0.95))) + SCREEN_WIDTH * 0.025;
 		float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_HEIGHT * 0.95))) + SCREEN_HEIGHT * 0.025;
 		points.push_back(sf::Vertex(sf::Vector2f(x, y)));
 	}
 
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
-	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Quickhull", sf::Style::Default, settings);
+	std::vector<sf::Vertex> convexHull;
 
-	Timer::start();
-	std::vector<sf::Vertex> convexHull = quickHull(points, window);
-	Timer::stop();
+	if (mode == eModePerformance) {
+		Timer::start();
+		convexHull = convex_hull::quickHull(points);
+		Timer::stop();
 
-	window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
-
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-
-			if (event.type == sf::Event::KeyPressed)
-				Update();
+		std::cout << "Convex Hull is formed by following points:" << std::endl;
+		for (sf::Vertex v : convexHull) {
+			std::cout << "(" << v.position.x << "," << v.position.y << ") ";
 		}
+	}
 
-		//window.clear();
+	if (mode == eModeGraphic) {
+		sf::ContextSettings settings;
+		settings.antialiasingLevel = 8;
+		sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Quickhull", sf::Style::Default, settings);
+		
+		convexHull = convex_hull::quickHull(points);
 
-		// RENDER
-		//window.draw(&points[0], points.size(), sf::Points);
+		while (window.isOpen())
+		{
+			// Draw points
+			for (sf::Vertex v : points) {
+				sf::CircleShape shape(2.f);
+				shape.setPosition(v.position);
+				window.draw(shape);
+			}
 
-		//window.draw(&convexHull[0], convexHull.size(), sf::LineStrip);
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+					window.close();
 
-		window.display();
+				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::Right) {
+					step++;
+					update(window);
+				}
+				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::Left) {
+					step--;
+					update(window);
+				}
+			}
+
+			window.display();
+		}
 	}
 
 	return 0;
