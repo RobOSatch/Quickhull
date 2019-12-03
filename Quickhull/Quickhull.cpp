@@ -20,9 +20,9 @@
 
 
 // CONSTANTS
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
-const int n = 1000;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 720;
+const int n = 100;
 
 int step = 0;
 
@@ -50,6 +50,7 @@ void update(sf::RenderWindow& window, std::vector<sf::Vertex> &points)
 	}
 
 	window.draw(&hullAtStep[0], hullAtStep.size(), sf::LinesStrip);
+	window.display();
 }
 
 // Imports floats from a file and returns them in a vector
@@ -86,13 +87,15 @@ int main()
 	for (int i = 0; i < n; i++) {
 		float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_WIDTH * 0.95))) + SCREEN_WIDTH * 0.025;
 		float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (SCREEN_HEIGHT * 0.95))) + SCREEN_HEIGHT * 0.025;
-		points.push_back(sf::Vertex(sf::Vector2f(x, y), sf::Color::Magenta));
+		sf::Vertex v(sf::Vector2f(x, y));
+		points.push_back(v);
 	}
 
 	std::vector<sf::Vertex> convexHull;
 
 	switch (mode) {
 	case eModePerformance:
+		points = importPointsFromFile("floats.txt");
 		Timer::start();
 		convexHull = convex_hull::quickHull(points);
 		Timer::stop();
@@ -103,12 +106,14 @@ int main()
 		}
 
 		std::cout << std::endl;
+		break;
 
 	case eModeGraphic:
 		sf::ContextSettings settings;
-		settings.antialiasingLevel = 8;
+		//settings.antialiasingLevel = 8;
 		sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Quickhull", sf::Style::Default, settings);
 
+		points = importPointsFromFile("floats.txt");
 		convexHull = convex_hull::quickHull(points);
 		update(window, points);
 
@@ -130,7 +135,7 @@ int main()
 				}
 			}
 
-			window.display();
+			//window.display();
 		}
 		break;
 	}

@@ -20,7 +20,7 @@ enum MODE {
 
 namespace convex_hull {
 
-	MODE mode = eModeGraphic;
+	MODE mode = eModePerformance;
 	std::vector<std::vector<sf::Vertex>> hullHistory;
 
 }
@@ -110,7 +110,7 @@ namespace convex_hull {
 		convexHull.push_back(points[minIndex]);
 		convexHull.push_back(points[maxIndex]);
 		points.erase(points.begin() + minIndex);
-		points.erase(points.begin() + maxIndex);
+		points.erase(points.begin() + maxIndex - 1);
 
 		std::vector<sf::Vertex> rightSet, leftSet;
 
